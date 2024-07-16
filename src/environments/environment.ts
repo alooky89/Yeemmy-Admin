@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  backendURL:'https://yeemmy.com/api'
+  backendURL:'https://adm.yeemmy.com/api'
 
 };
