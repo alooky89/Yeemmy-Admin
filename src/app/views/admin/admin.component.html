@@ -1,0 +1,70 @@
+<div class="sidebar-toggle" *ngIf="!isDrawerOpened">
+  <button  (click)="toggleDrawer()" class="open-drawer-btn">
+    <mat-icon style="color: white;margin-top: 6px">menu</mat-icon>
+  </button>
+</div>
+<mat-drawer-container style="height: 100vh">
+  <mat-drawer mode="side" [opened]="isDrawerOpened" class="w-25">
+    <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+      <span (click)="toggleDrawer()" class="d-flex align-items-center justify-content-between pb-3 mb-3 link-dark text-decoration-none border-bottom" style="cursor: pointer">
+        <span class="fs-5 fw-semibold">Menu</span>
+        <mat-icon >menu</mat-icon>
+      </span>
+      <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+          <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#event-collapse" aria-expanded="false">
+            Event
+          </button>
+          <div class="collapse" id="event-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a routerLink="/admin/club" class="link-dark rounded">Event</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="mb-1">
+          <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#club-collapse" aria-expanded="false">
+            Club
+          </button>
+          <div class="collapse" id="club-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a routerLink="/admin/club" class="link-dark rounded">Club</a></li>
+              <li><a routerLink="/admin/court" class="link-dark rounded">Court</a></li>
+              <li><a routerLink="/admin/user" class="link-dark rounded">user</a></li>
+              <li><a href="#" class="link-dark rounded">Championship</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="mb-1">
+          <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+            Bookings
+          </button>
+          <div class="collapse" id="orders-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a href="#" class="link-dark rounded">New</a></li>
+              <li><a href="#" class="link-dark rounded">Processed</a></li>
+              <li><a href="#" class="link-dark rounded">Shipped</a></li>
+              <li><a href="#" class="link-dark rounded">Returned</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="border-top my-3"></li>
+        <li class="mb-1">
+          <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+            Account
+          </button>
+          <div class="collapse" id="account-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a href="#" class="link-dark rounded">Settings</a></li>
+              <li><a href="#" class="link-dark rounded">Sign out</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="p-4">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+

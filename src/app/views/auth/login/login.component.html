@@ -1,0 +1,51 @@
+<!--
+<div class="ion-padding">
+<div class="d-flex flex-column ion-justify-content-center h-100">
+  <h1 class="mb-3 fw-bold" style="font-size: 2.5rem">Sign In</h1>
+<form [formGroup]="LoginForm" (submit)="login()">
+  <label class="fw-bold">Email/Phone Number</label>
+  <input matInput  formControlName="phone" fill="outline" placeholder="Enter Phone" class="mb-2">
+  <label class="fw-bold">Password</label>
+  <input matInput  formControlName="password" type="password" fill="outline" placeholder="Enter Password" class="mb-2">
+
+  <button mat-button class="w-100 mt-2" type="submit" shape="round">Sign in</button>
+</form>
+
+  </div>
+</div>
+-->
+<!-- Login 2 - Bootstrap Brain Component -->
+<div class="bg-light py-3 py-md-5">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
+        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-5">
+                <h3>Log in</h3>
+              </div>
+            </div>
+          </div>
+          <form [formGroup]="LoginForm" (submit)="login()">
+            <div class="row gy-3 gy-md-4 overflow-hidden">
+              <div class="col-12">
+                <label for="email" class="form-label">Email/phone <span class="text-danger">*</span></label>
+                <input  class="form-control" id="email" formControlName="phone" required>
+              </div>
+              <div class="col-12">
+                <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" formControlName="password" name="password" id="password" value="" required>
+              </div>
+              <div class="col-12">
+                <div class="d-grid">
+                  <button class="btn btn-lg btn-primary" type="submit">Log in</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
