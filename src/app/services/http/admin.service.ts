@@ -35,6 +35,22 @@ export class AdminService {
   getAllCourts(){
     return this.http.get<any>(environment.backendURL+'/admin/court/all')
   }
+  getAllBats(){
+    return this.http.get<any>(environment.backendURL+'/admin/bat/all')
+  }
+
+
+  updateBat(data): Observable<any> {
+    return this.http.patch<any>(environment.backendURL+'/admin/bat/'+data.id, {name:data.name});
+  }
+
+  addBat(data): Observable<any> {
+    return this.http.post<any>(environment.backendURL+'/admin/bat', data);
+  }
+
+
+
+
   createCourt(courtData): Observable<any> {
     const formData = new FormData();
     for (const key in courtData) {
@@ -58,6 +74,10 @@ export class AdminService {
 
   deleteCourt(id: number): Observable<any> {
     return this.http.delete<any>(environment.backendURL+'/admin/court/'+id);
+  }
+
+  deleteBat(id: number): Observable<any> {
+    return this.http.delete<any>(environment.backendURL+'/admin/bat/'+id);
   }
 
 

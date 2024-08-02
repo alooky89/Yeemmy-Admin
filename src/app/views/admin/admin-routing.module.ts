@@ -4,6 +4,7 @@ import {AdminComponent} from "./admin.component";
 import {ClubComponent} from "./sport/club/club.component";
 import {CourtComponent} from "./sport/court/court.component";
 import {UserComponent} from "./sport/user/user.component";
+import {BatBrandComponent} from "./sport/bat-brand/bat-brand.component";
 
 const routes: Routes = [
   {path: '',
@@ -13,6 +14,8 @@ const routes: Routes = [
       component:ClubComponent},
       {path:'court',
       component:CourtComponent},
+      {path:'batbrand',
+      component:BatBrandComponent},
       {path:'user',
       component:UserComponent},
 

@@ -23,13 +23,15 @@ import {CommonModule} from "@angular/common";
 import {MatDialogActions, MatDialogContent, MatDialogModule} from "@angular/material/dialog";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {provideNativeDateAdapter} from "@angular/material/core";
+import { BatBrandComponent } from './sport/bat-brand/bat-brand.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     ClubComponent,
     CourtComponent,
-    UserComponent
+    UserComponent,
+    BatBrandComponent
   ],
   imports: [
     CommonModule,
