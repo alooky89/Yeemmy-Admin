@@ -2,73 +2,79 @@ import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AdminService} from "../../../../services/http/admin.service";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-bat-brand',
-  templateUrl: './bat-brand.component.html',
-  styleUrl: './bat-brand.component.scss'
+  selector: 'app-categories',
+  templateUrl: './categories.component.html',
+  styleUrl: './categories.component.scss'
 })
-export class BatBrandComponent {
+export class CategoriesComponent {
 
-
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  imagePreview: string | ArrayBuffer | null = null;
+  selectedFile: File | null = null;
+  displayedColumns: string[] = ['id', 'name', 'parentCategory','route','action'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('addCourt') courtModal: TemplateRef<any>;
   @ViewChild('confirmDeleteing') confirmDeleteing: TemplateRef<any>;
-  courtForm:FormGroup;
+  categoryForm:FormGroup;
+
   constructor(private adminService: AdminService, private dialog: MatDialog,private _formBuilder:FormBuilder) {
-    this.adminService.getAllBats().subscribe(res => {
+    this.adminService.getAllCategories().subscribe(res => {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
 
-    this.courtForm=this._formBuilder.group({
+    this.categoryForm=this._formBuilder.group({
       id:[null],
       name:['', Validators.required],
+      parentCategory:[''],
+      route:['', Validators.required],
+      photo:['', Validators.required],
     })
   }
 
   addCourtModel() {
+    this.categoryForm.reset()
     this.dialog.open(this.courtModal)
   }
 
   save() {
-    if(this.courtForm.invalid)
+    if(this.categoryForm.invalid)
       return
-    let payload=this.courtForm.getRawValue()
+    let payload=this.categoryForm.getRawValue()
+    if(this.selectedFile)
+      payload.photo=this.selectedFile
     if(payload.id)
-      this.adminService.updateBat(payload).subscribe(res=>{
+      this.adminService.updateCategory(payload).subscribe(res=>{
         let index=this.dataSource.data.findIndex(c=>c.id==res.id)
         this.dataSource.data[index]=res
         this.dataSource._updateChangeSubscription()
         this.dialog.closeAll()
-        this.courtForm.reset()
       })
     else
-      this.adminService.addBat(payload).subscribe(res=>{
+      this.adminService.addCategory(payload).subscribe(res=>{
         this.dataSource.data.push(res)
         this.dataSource._updateChangeSubscription()
         this.dialog.closeAll()
-        this.courtForm.reset()
       })
 
   }
 
   editCourt(court){
-    this.courtForm.patchValue(court)
+    this.categoryForm.patchValue(court)
     this.dialog.open(this.courtModal)
   }
 
   deleteCourt(id) {
     this.dialog.open(this.confirmDeleteing).afterClosed().subscribe(res => {
       if (res) {
-        this.adminService.deleteBat(id).subscribe(() => {
+        this.adminService.deleteCategory(id).subscribe(() => {
           this.dataSource.data = this.dataSource.data.filter(user => user.id !== id);
         })
       }
@@ -83,5 +89,27 @@ export class BatBrandComponent {
       this.dataSource.paginator.firstPage();
     }
   }
+
+
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.selectedFile = file;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  getParentCategoryName(id){
+    return this.dataSource.data.find(e=>e.id==id)?.name
+  }
+
+
+
+
 
 }

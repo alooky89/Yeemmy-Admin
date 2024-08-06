@@ -12,24 +12,8 @@ export class AdminService {
   }
 
 
-  getMyProfile(){
-    return this.http.get<any>(environment.backendURL+'/user/me')
-  }
-
-  getEvents(){
-    return this.http.get<any>(environment.backendURL+'/user/events')
-  }
-
-  getChampions(){
-    return this.http.get<any>(environment.backendURL+'/user/champions')
-  }
-
-  getMatches(){
-    return this.http.get<any>(environment.backendURL+'/user/matches')
-  }
-
-  getMyCourts(){
-    return this.http.get<any>(environment.backendURL+'/user/court')
+  getAllCategories(){
+    return this.http.get<any>(environment.backendURL+'/admin/category/all')
   }
 
   getAllCourts(){
@@ -46,6 +30,27 @@ export class AdminService {
 
   addBat(data): Observable<any> {
     return this.http.post<any>(environment.backendURL+'/admin/bat', data);
+  }
+
+
+  updateCategory(data): Observable<any> {
+    const formData = new FormData();
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        formData.append(key, data[key]);
+      }
+    }
+    return this.http.patch<any>(environment.backendURL+'/admin/category/'+data.id, formData);
+  }
+
+  addCategory(data): Observable<any> {
+    const formData = new FormData();
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        formData.append(key, data[key]);
+      }
+    }
+    return this.http.post<any>(environment.backendURL+'/admin/category', formData);
   }
 
 
@@ -78,6 +83,10 @@ export class AdminService {
 
   deleteBat(id: number): Observable<any> {
     return this.http.delete<any>(environment.backendURL+'/admin/bat/'+id);
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    return this.http.delete<any>(environment.backendURL+'/admin/category/'+id);
   }
 
 
@@ -130,34 +139,6 @@ export class AdminService {
 
   deleteUser(id: number): Observable<any> {
     return this.http.delete<any>(environment.backendURL+'/admin/user/'+id);
-  }
-
-
-
-
-  getClubCourts(club_id,courtIDs?){
-
-    let params=new HttpParams().set('court',courtIDs)
-    return this.http.get<any>(environment.backendURL+'/user/club/'+club_id+'/court', {params})
-  }
-
-
-  getCourtByID(id){
-    return this.http.get<any>(environment.backendURL+'/user/court/'+id)
-  }
-
-  saveMyProfile(payload){
-    let formData = new FormData();
-    for (const key in payload) {
-      if (payload.hasOwnProperty(key)) {
-        formData.append(key, payload[key]);
-      }
-    }
-    return this.http.post(environment.backendURL+'/user/me',formData)
-  }
-
-  getCourtReservation(court_id){
-    return this.http.get<any>(environment.backendURL+'/booking/court/'+court_id)
   }
 
 

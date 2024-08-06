@@ -24,6 +24,7 @@ import {MatDialogActions, MatDialogContent, MatDialogModule} from "@angular/mate
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {provideNativeDateAdapter} from "@angular/material/core";
 import { BatBrandComponent } from './sport/bat-brand/bat-brand.component';
+import { CategoriesComponent } from './sport/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { BatBrandComponent } from './sport/bat-brand/bat-brand.component';
     ClubComponent,
     CourtComponent,
     UserComponent,
-    BatBrandComponent
+    BatBrandComponent,
+    CategoriesComponent
   ],
   imports: [
     CommonModule,
