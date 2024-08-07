@@ -68,8 +68,11 @@ export class CategoriesComponent {
 
   editCourt(court){
     this.categoryForm.patchValue(court)
+    this.categoryForm.get('parentCategory').setValue(court.parentCategory?.id)
+    this.selectedFile=this.imagePreview=court.photo
     this.dialog.open(this.courtModal)
   }
+
 
   deleteCourt(id) {
     this.dialog.open(this.confirmDeleteing).afterClosed().subscribe(res => {

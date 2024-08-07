@@ -17,6 +17,7 @@ export class ClubComponent implements OnInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('confirmDeleteing') confirmDeleteing: TemplateRef<any>;
+  @ViewChild('editClub') clubEditModal: TemplateRef<any>;
   showStepper=false;
   clubFormGroup:FormGroup;
   courtForm:FormGroup;
@@ -46,6 +47,7 @@ export class ClubComponent implements OnInit{
 
   ngOnInit() {
     this.clubFormGroup=this._formbuilder.group({
+      id:[null,],
       name:[null,],
       address:[null,],
       website:[null,],
@@ -81,16 +83,6 @@ export class ClubComponent implements OnInit{
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
-    }
-  }
-
-
-  setCapacity(event) {
-    if (event.value == 'padel') {
-      this.capacity = [{value:2,label:'Single'},{value:4,label:'Double'}]
-    }
-    if (event.value == 'football') {
-      this.capacity = [{value:5,label:5},{value:8,label:8},{value:11,label:11}]
     }
   }
 
@@ -187,6 +179,24 @@ export class ClubComponent implements OnInit{
 
   getCapacityFc(index){
     return this.CourtsFC.at(index).get('type').value;
+  }
+
+  saveEditClub(){
+    if(this.clubFormGroup.invalid)
+      return
+    let payload=this.clubFormGroup.getRawValue()
+    if(this.selectedFile)
+      payload.photo=this.selectedFile
+    this.adminService.updateClub(payload).subscribe(res=>{
+      window.location.reload()
+    })
+
+  }
+  editClubForm(court){
+    this.clubFormGroup.patchValue(court)
+    this.clubFormGroup.get('photo').setValue(null)
+    this.selectedFile=this.imagePreview=court.photo
+    this.dialog.open(this.clubEditModal)
   }
 
 

@@ -105,8 +105,14 @@ export class AdminService {
     return this.http.post<any>(environment.backendURL+'/admin/club', formData);
   }
 
-  updateClub(id: number, clubData: FormData): Observable<any> {
-    return this.http.patch<any>(environment.backendURL+'/admin/club/'+id, clubData);
+  updateClub(clubData): Observable<any> {
+    let formData = new FormData();
+    for (const key in clubData) {
+      if (clubData.hasOwnProperty(key)) {
+        formData.append(key, clubData[key]);
+      }
+    }
+    return this.http.patch<any>(environment.backendURL+'/admin/club/'+clubData.id, formData);
   }
 
   deleteClub(id: number): Observable<any> {
