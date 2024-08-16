@@ -22,6 +22,12 @@ export class AdminService {
   getAllBats(){
     return this.http.get<any>(environment.backendURL+'/admin/bat/all')
   }
+  getAllTransactions(){
+    return this.http.get<any>(environment.backendURL+'/admin/transactions')
+  }
+  getAllWallet(){
+    return this.http.get<any>(environment.backendURL+'/admin/wallet')
+  }
 
 
   updateBat(data): Observable<any> {
@@ -117,6 +123,10 @@ export class AdminService {
 
   deleteClub(id: number): Observable<any> {
     return this.http.delete<any>(environment.backendURL+'/admin/club/'+id);
+  }
+
+  deleteTransaction(id: number): Observable<any> {
+    return this.http.delete<any>(environment.backendURL+'/admin/transactions/'+id);
   }
 
   getAllUsers(){

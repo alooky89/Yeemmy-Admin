@@ -6,6 +6,8 @@ import {CourtComponent} from "./sport/court/court.component";
 import {UserComponent} from "./sport/user/user.component";
 import {BatBrandComponent} from "./sport/bat-brand/bat-brand.component";
 import {CategoriesComponent} from "./sport/categories/categories.component";
+import {TransactionsComponent} from "./bookings/transactions/transactions.component";
+import {WalletComponent} from "./bookings/wallet/wallet.component";
 
 const routes: Routes = [
   {path: '',
@@ -21,6 +23,12 @@ const routes: Routes = [
       component:UserComponent},
       {path:'categories',
       component:CategoriesComponent},
+
+      {path:'transactions',
+      component:TransactionsComponent},
+
+      {path:'wallet',
+      component:WalletComponent},
 
 
     ]}
