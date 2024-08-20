@@ -38,15 +38,20 @@
       <td mat-cell *matCellDef="let row"> {{row.email}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> username </th>
+      <td mat-cell *matCellDef="let row"> {{row.username}} </td>
+    </ng-container>
+
 
     <ng-container matColumnDef="role">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> role </th>
       <td mat-cell *matCellDef="let row"> {{row.role}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="bithdate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> bithdate </th>
-      <td mat-cell *matCellDef="let row"> {{row.bithdate}} </td>
+    <ng-container matColumnDef="birthdate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> birthdate </th>
+      <td mat-cell *matCellDef="let row"> {{row.birthdate|date:'dd/MM/YYYY'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="gender">
@@ -79,18 +84,24 @@
 
 <ng-template #addUser>
   <mat-dialog-content>
-    <form class="d-flex flex-column p-3" [formGroup]="userForm">
+    <form class="d-flex flex-column p-3" [formGroup]="userForm"  >
 
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" required>
         <mat-label>First name</mat-label>
         <input matInput formControlName="firstName">
+        <mat-error *ngIf="userForm.get('firstName').hasError('required')">
+          First Name is required
+        </mat-error>
       </mat-form-field>
 
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" required>
         <mat-label>Last name</mat-label>
-        <input matInput formControlName="lastName">
+        <input matInput formControlName="lastName" required>
+        <mat-error *ngIf="userForm.get('lastName').hasError('required')">
+          Last name is required
+        </mat-error>
       </mat-form-field>
 
 
@@ -100,26 +111,46 @@
           <mat-option value="F">Male</mat-option>
           <mat-option value="M">Female</mat-option>
         </mat-select>
+        <mat-error *ngIf="userForm.get('gender').hasError('required')">
+          gender is required
+        </mat-error>
       </mat-form-field>
 
 
-      <mat-form-field>
+      <mat-form-field required>
         <mat-label>Birthdate</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="birthdate">
+        <input matInput [matDatepicker]="picker"  formControlName="birthdate">
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="userForm.get('birthdate').hasError('required')">
+          birthdate is required
+        </mat-error>
       </mat-form-field>
 
 
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email">
+        <mat-error *ngIf="userForm.get('email').hasError('required')">
+          email is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>username</mat-label>
+        <input matInput formControlName="username" required>
+        <mat-error *ngIf="userForm.get('username').hasError('required')">
+          username is required
+        </mat-error>
       </mat-form-field>
 
 
       <mat-form-field appearance="fill">
         <mat-label>Phone</mat-label>
         <input matInput formControlName="phone">
+        <mat-error *ngIf="userForm.get('phone').hasError('required')">
+          phone is required
+        </mat-error>
       </mat-form-field>
 
 
@@ -141,14 +172,9 @@
         <img [src]="imagePreview" alt="Image Preview" class="mt-1" *ngIf="selectedFile" width="100">
       </div>
 
-
+      <button type="submit" mat-flat-button class="w-100" (click)="save()" >Save</button>
     </form>
   </mat-dialog-content>
-
-  <mat-dialog-actions>
-    <button type="submit" mat-flat-button class="w-100" (click)="save()">Save</button>
-  </mat-dialog-actions>
-
 
 </ng-template>
 

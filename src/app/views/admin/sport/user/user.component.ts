@@ -12,7 +12,7 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
-  displayedColumns: string[] = ['id', 'name', 'phone','email','role', 'bithdate','gender', 'adress','action'];
+  displayedColumns: string[] = ['id', 'name', 'phone','email','username','role', 'birthdate','gender', 'adress','action'];
   dataSource: MatTableDataSource<any>=new MatTableDataSource([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -37,7 +37,8 @@ export class UserComponent {
       firstName:['', Validators.required],
       lastName:['', Validators.required],
       birthdate:['', Validators.required],
-      photo:['', Validators.required],
+      photo:[''],
+      username:['', Validators.required],
       email:['', [Validators.required,Validators.email]],
       password:[null],
       phone:['', Validators.required],
@@ -59,9 +60,6 @@ export class UserComponent {
 
 
 
-
-
-
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
@@ -77,6 +75,7 @@ export class UserComponent {
 
 
   addUserModel() {
+    this.userForm.reset()
     this.dialog.open(this.userModal)
   }
 

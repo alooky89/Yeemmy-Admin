@@ -121,6 +121,13 @@
       </form>
     </mat-step>
     <mat-step [stepControl]="userForm" label="Create Owner">
+      <mat-form-field appearance="fill">
+        <mat-label>Set user</mat-label>
+      <mat-select (selectionChange)="setUser($event)">
+        <mat-option *ngFor="let c of users" [value]="c">{{c.username}}</mat-option>
+      </mat-select>
+      </mat-form-field>
+
       <form class="d-flex flex-column p-3" [formGroup]="userForm">
 
 
@@ -139,8 +146,8 @@
         <mat-form-field>
           <mat-label>Gender</mat-label>
           <mat-select formControlName="gender">
-            <mat-option value="F">Male</mat-option>
-            <mat-option value="M">Female</mat-option>
+            <mat-option value="M">Male</mat-option>
+            <mat-option value="F">Female</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -156,6 +163,11 @@
         <mat-form-field appearance="fill">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>username</mat-label>
+          <input matInput formControlName="username">
         </mat-form-field>
 
 
@@ -187,48 +199,48 @@
     <mat-step [stepControl]="courtForm" label="Create courts">
       <ng-container [formGroup]="courtForm">
         <ng-container formArrayName="courts" *ngFor="let cf of CourtsFC.controls; let i = index">
-      <form class="d-flex flex-column p-3" [formGroupName]="i">
+          <form class="d-flex flex-column p-3" [formGroupName]="i">
 
-        <mat-form-field appearance="fill">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name">
-        </mat-form-field>
-
-
-        <mat-form-field>
-          <mat-label>Court type</mat-label>
-          <mat-select  formControlName="type">
-            <mat-option [value]="'football'">Football</mat-option>
-            <mat-option [value]="'padel'">Padel</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Capacity</mat-label>
-          <mat-select formControlName="capacity">
-            <ng-container *ngIf="getCapacityFc(i)=='football'">
-            <mat-option *ngFor="let c of footballCapacity" [value]="c.value">{{c.label}}</mat-option>
-            </ng-container>
-            <ng-container *ngIf="getCapacityFc(i)=='padel'">
-            <mat-option *ngFor="let c of padelCapacity" [value]="c.value">{{c.label}}</mat-option>
-            </ng-container>
-          </mat-select>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
 
 
-        <div class="d-flex flex-column justify-content-center my-3">
-          <!-- Use a unique ID for each file input and reference it correctly -->
-          <input formControlName="photo" type="file" (change)="onFileSelected($event, i)" hidden [id]="'fileInput' + i" #fileInput>
-          <button mat-flat-button color="primary" (click)="fileInput.click()">Upload Image</button>
-          <img [src]="getImagePreview(i)" alt="Image Preview" class="mt-1" *ngIf="getSelectedFile(i)" width="100">
-        </div>
+            <mat-form-field>
+              <mat-label>Court type</mat-label>
+              <mat-select  formControlName="type">
+                <mat-option [value]="'football'">Football</mat-option>
+                <mat-option [value]="'padel'">Padel</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-      </form>
+            <mat-form-field>
+              <mat-label>Capacity</mat-label>
+              <mat-select formControlName="capacity">
+                <ng-container *ngIf="getCapacityFc(i)=='football'">
+                  <mat-option *ngFor="let c of footballCapacity" [value]="c.value">{{c.label}}</mat-option>
+                </ng-container>
+                <ng-container *ngIf="getCapacityFc(i)=='padel'">
+                  <mat-option *ngFor="let c of padelCapacity" [value]="c.value">{{c.label}}</mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+
+
+            <div class="d-flex flex-column justify-content-center my-3">
+              <!-- Use a unique ID for each file input and reference it correctly -->
+              <input formControlName="photo" type="file" (change)="onFileSelected($event, i)" hidden [id]="'fileInput' + i" #fileInput>
+              <button mat-flat-button color="primary" (click)="fileInput.click()">Upload Image</button>
+              <img [src]="getImagePreview(i)" alt="Image Preview" class="mt-1" *ngIf="getSelectedFile(i)" width="100">
+            </div>
+
+          </form>
         </ng-container>
         <div class="d-flex justify-content-center">
           <button mat-button (click)="addNewCourt()">Add Court</button>
         </div>
-        </ng-container>
+      </ng-container>
       <div class="d-flex justify-content-between">
         <button mat-flat-button matStepperPrevious>Back</button>
         <button mat-flat-button matStepperNext (click)="submit()" >Save Club</button>
@@ -265,42 +277,42 @@
 
 <ng-template #editClub>
   <mat-dialog-content>
-  <form class="d-flex flex-column p-3" [formGroup]="clubFormGroup">
-    <ng-template matStepLabel>Create club</ng-template>
+    <form class="d-flex flex-column p-3" [formGroup]="clubFormGroup">
+      <ng-template matStepLabel>Create club</ng-template>
 
-    <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name" required>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Address</mat-label>
-      <input matInput formControlName="address" required>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" required>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>website</mat-label>
-      <input matInput formControlName="website" required>
-    </mat-form-field>
-
-
-    <div class="d-flex flex-column justify-content-center my-3">
-      <input formControlName="photo" type="file" (change)="onClubFileSelected($event)" hidden #fil>
-      <button mat-flat-button color="primary" (click)="fil.click()">Upload Image</button>
-      <img [src]="imagePreview" alt="Image Preview" class="mt-1" *ngIf="selectedFile" width="100">
-    </div>
+      <mat-form-field>
+        <mat-label>website</mat-label>
+        <input matInput formControlName="website" required>
+      </mat-form-field>
 
 
-    <mat-form-field>
-      <mat-label>latitude</mat-label>
-      <input matInput formControlName="latitude" required>
-    </mat-form-field>
+      <div class="d-flex flex-column justify-content-center my-3">
+        <input formControlName="photo" type="file" (change)="onClubFileSelected($event)" hidden #fil>
+        <button mat-flat-button color="primary" (click)="fil.click()">Upload Image</button>
+        <img [src]="imagePreview" alt="Image Preview" class="mt-1" *ngIf="selectedFile" width="100">
+      </div>
 
-    <mat-form-field>
-      <mat-label>longitude</mat-label>
-      <input matInput formControlName="longitude" required>
-    </mat-form-field>
-  </form>
+
+      <mat-form-field>
+        <mat-label>latitude</mat-label>
+        <input matInput formControlName="latitude" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>longitude</mat-label>
+        <input matInput formControlName="longitude" required>
+      </mat-form-field>
+    </form>
   </mat-dialog-content>
 
   <mat-dialog-actions>

@@ -29,11 +29,12 @@ export class ClubComponent implements OnInit{
   footballCapacity=[{value:5,label:5},{value:8,label:8},{value:11,label:11}]
   imagePreviews: string[] = [];
   CourtsFiles=[]
+  users=[]
 
   constructor(private adminService:AdminService,
               private dialog: MatDialog,
               private _formbuilder:FormBuilder) {
-  this.initialiseClubs()
+    this.initialiseClubs()
 
   }
 
@@ -43,6 +44,8 @@ export class ClubComponent implements OnInit{
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
+
+    this.adminService.getAllUsers().subscribe(users=>this.users=users)
   }
 
   ngOnInit() {
@@ -65,11 +68,13 @@ export class ClubComponent implements OnInit{
       id:[null],
       firstName:['', Validators.required],
       lastName:['', Validators.required],
+      username:['', Validators.required],
       birthdate:['', Validators.required],
       photo:['', Validators.required],
       email:['', [Validators.required,Validators.email]],
       password:[null],
       phone:['', Validators.required],
+      // role:['owner'],
       adress:[''],
       gender:['', Validators.required],
     })
@@ -152,15 +157,13 @@ export class ClubComponent implements OnInit{
 
 
   submit(){
+    if(this.userForm.invalid|| this.clubFormGroup.invalid)
+    return
 
-
-
-    this.adminService.createUser(this.userForm.getRawValue()).subscribe(res=>{
-      let newUser=res
+    if(this.userForm.get('id').value){
       let pc=this.clubFormGroup.getRawValue()
       pc.photo=this.selectedFile;
-      pc.user=newUser.id
-
+      pc.user=this.userForm.get('id').value
       this.adminService.createClub(pc).subscribe(club=>{
         for (let i = 0; i < this.CourtsFC.controls.length; i++) {
           let court=this.CourtsFC.at(i).getRawValue()
@@ -172,7 +175,28 @@ export class ClubComponent implements OnInit{
         this.initialiseClubs()
 
       })
-    })
+    }else {
+      this.adminService.createUser(this.userForm.getRawValue()).subscribe(res=>{
+        let newUser=res
+        let pc=this.clubFormGroup.getRawValue()
+        pc.photo=this.selectedFile;
+        pc.user=newUser.id
+
+        this.adminService.createClub(pc).subscribe(club=>{
+          for (let i = 0; i < this.CourtsFC.controls.length; i++) {
+            let court=this.CourtsFC.at(i).getRawValue()
+            court.club=club.id
+            court.photo=this.CourtsFiles[i]??undefined
+            this.adminService.createCourt(court).subscribe()
+          }
+          this.toggleStepper()
+          this.initialiseClubs()
+
+        })
+      })
+
+    }
+
 
 
   }
@@ -180,6 +204,11 @@ export class ClubComponent implements OnInit{
   getCapacityFc(index){
     return this.CourtsFC.at(index).get('type').value;
   }
+
+  setUser(event){
+    this.userForm.patchValue(event.value)
+  }
+
 
   saveEditClub(){
     if(this.clubFormGroup.invalid)
