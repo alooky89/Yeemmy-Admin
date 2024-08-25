@@ -27,6 +27,8 @@ import { BatBrandComponent } from './sport/bat-brand/bat-brand.component';
 import { CategoriesComponent } from './sport/categories/categories.component';
 import { TransactionsComponent } from './bookings/transactions/transactions.component';
 import { WalletComponent } from './bookings/wallet/wallet.component';
+import { FeesComponent } from './bookings/fees/fees.component';
+import {MatRadioGroup, MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   declarations: [
@@ -37,29 +39,31 @@ import { WalletComponent } from './bookings/wallet/wallet.component';
     BatBrandComponent,
     CategoriesComponent,
     TransactionsComponent,
-    WalletComponent
+    WalletComponent,
+    FeesComponent
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    MatSidenavModule,
-    MatStepperModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatDatepickerModule,
-    MatDialogModule
-  ],
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatListModule,
+        MatSidenavModule,
+        MatStepperModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatDatepickerModule,
+        MatDialogModule,
+        MatRadioModule
+    ],
   providers:[
     AdminService,
     provideNativeDateAdapter()

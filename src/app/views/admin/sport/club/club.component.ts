@@ -20,6 +20,7 @@ export class ClubComponent implements OnInit{
   @ViewChild('editClub') clubEditModal: TemplateRef<any>;
   showStepper=false;
   clubFormGroup:FormGroup;
+  pricingFormGroup:FormGroup;
   courtForm:FormGroup;
   userForm:FormGroup;
   capacity;
@@ -59,6 +60,12 @@ export class ClubComponent implements OnInit{
       longitude:[null,],
 
     });
+    this.pricingFormGroup=this._formbuilder.group({
+      type:['fixed', Validators.required],
+      price:[null, Validators.required],
+      from:[null],
+      to:[null],
+    });
     this.courtForm = this._formbuilder.group({
       courts:this._formbuilder.array([])
     });
@@ -70,7 +77,6 @@ export class ClubComponent implements OnInit{
       lastName:['', Validators.required],
       username:['', Validators.required],
       birthdate:['', Validators.required],
-      photo:['', Validators.required],
       email:['', [Validators.required,Validators.email]],
       password:[null],
       phone:['', Validators.required],
@@ -133,7 +139,9 @@ export class ClubComponent implements OnInit{
     return owner.firstName+' '+owner.lastName
   }
 
-
+  get PricingType(){
+    return this.pricingFormGroup.get('type').value
+  }
   toggleStepper(){
     this.showStepper=!this.showStepper
   }
@@ -159,12 +167,14 @@ export class ClubComponent implements OnInit{
   submit(){
     if(this.userForm.invalid|| this.clubFormGroup.invalid)
     return
-
+    let pricing=this.pricingFormGroup.getRawValue()
     if(this.userForm.get('id').value){
       let pc=this.clubFormGroup.getRawValue()
       pc.photo=this.selectedFile;
       pc.user=this.userForm.get('id').value
       this.adminService.createClub(pc).subscribe(club=>{
+        pricing.club=club.id
+        this.adminService.createPricing(pricing).subscribe()
         for (let i = 0; i < this.CourtsFC.controls.length; i++) {
           let court=this.CourtsFC.at(i).getRawValue()
           court.club=club.id
@@ -183,6 +193,9 @@ export class ClubComponent implements OnInit{
         pc.user=newUser.id
 
         this.adminService.createClub(pc).subscribe(club=>{
+
+          pricing.club=club.id
+          this.adminService.createPricing(pricing).subscribe()
           for (let i = 0; i < this.CourtsFC.controls.length; i++) {
             let court=this.CourtsFC.at(i).getRawValue()
             court.club=club.id

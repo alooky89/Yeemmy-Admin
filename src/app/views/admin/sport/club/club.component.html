@@ -120,6 +120,45 @@
         </div>
       </form>
     </mat-step>
+
+    <mat-step [stepControl]="pricingFormGroup">
+        <ng-template matStepLabel>Pricing</ng-template>
+      <form class="d-flex flex-column p-3" [formGroup]="pricingFormGroup">
+
+
+          <mat-label>Type</mat-label>
+          <mat-radio-group formControlName="type" >
+            <mat-radio-button [value]="'fixed'">Fixed</mat-radio-button>
+            <mat-radio-button [value]="'range'">Range</mat-radio-button>
+          </mat-radio-group>
+
+
+        <mat-form-field>
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price" required>
+        </mat-form-field>
+
+        <ng-container *ngIf="PricingType =='range'">
+
+
+        <mat-form-field>
+          <mat-label>From</mat-label>
+          <input matInput formControlName="from" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>To</mat-label>
+          <input matInput formControlName="to" required>
+        </mat-form-field>
+
+
+        </ng-container>
+
+        <div class="d-flex justify-content-end">
+          <button mat-flat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
     <mat-step [stepControl]="userForm" label="Create Owner">
       <mat-form-field appearance="fill">
         <mat-label>Set user</mat-label>

@@ -25,6 +25,10 @@ export class AdminService {
   getAllTransactions(){
     return this.http.get<any>(environment.backendURL+'/admin/transactions')
   }
+
+  getFees(){
+    return this.http.get<any>(environment.backendURL+'/admin/fees')
+  }
   getAllWallet(){
     return this.http.get<any>(environment.backendURL+'/admin/wallet')
   }
@@ -32,6 +36,14 @@ export class AdminService {
 
   updateBat(data): Observable<any> {
     return this.http.patch<any>(environment.backendURL+'/admin/bat/'+data.id, {name:data.name});
+  }
+
+  updateFees(data): Observable<any> {
+    return this.http.patch<any>(environment.backendURL+'/admin/fees/'+data.id, data);
+  }
+
+  createPricing(data): Observable<any> {
+    return this.http.post<any>(environment.backendURL+'/admin/pricing', data);
   }
 
   addBat(data): Observable<any> {

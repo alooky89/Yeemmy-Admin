@@ -8,30 +8,51 @@ import {BatBrandComponent} from "./sport/bat-brand/bat-brand.component";
 import {CategoriesComponent} from "./sport/categories/categories.component";
 import {TransactionsComponent} from "./bookings/transactions/transactions.component";
 import {WalletComponent} from "./bookings/wallet/wallet.component";
+import {FeesComponent} from "./bookings/fees/fees.component";
 
 const routes: Routes = [
-  {path: '',
+  {
+    path: '',
     component: AdminComponent,
     children: [
-      {path:'club',
-      component:ClubComponent},
-      {path:'court',
-      component:CourtComponent},
-      {path:'batbrand',
-      component:BatBrandComponent},
-      {path:'user',
-      component:UserComponent},
-      {path:'categories',
-      component:CategoriesComponent},
+      {
+        path: 'club',
+        component: ClubComponent
+      },
+      {
+        path: 'court',
+        component: CourtComponent
+      },
+      {
+        path: 'batbrand',
+        component: BatBrandComponent
+      },
+      {
+        path: 'user',
+        component: UserComponent
+      },
+      {
+        path: 'categories',
+        component: CategoriesComponent
+      },
 
-      {path:'transactions',
-      component:TransactionsComponent},
+      {
+        path: 'transactions',
+        component: TransactionsComponent
+      },
 
-      {path:'wallet',
-      component:WalletComponent},
+      {
+        path: 'wallet',
+        component: WalletComponent
+      },
+      {
+        path: 'fees',
+        component: FeesComponent
+      },
 
 
-    ]}
+    ]
+  }
 ];
 
 @NgModule({
