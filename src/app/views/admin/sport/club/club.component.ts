@@ -80,7 +80,7 @@ export class ClubComponent implements OnInit{
       email:['', [Validators.required,Validators.email]],
       password:[null],
       phone:['', Validators.required],
-      // role:['owner'],
+      role:['owner'],
       adress:[''],
       gender:['', Validators.required],
     })
