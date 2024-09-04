@@ -29,6 +29,14 @@ export class AdminService {
   getFees(){
     return this.http.get<any>(environment.backendURL+'/admin/fees')
   }
+
+  createAccount(user){
+    return this.http.post<any>(environment.backendURL+'/admin/account',{user})
+  }
+
+  AdminPayUser(payload){
+    return this.http.post<any>(environment.backendURL+'/admin/account/pay',payload)
+  }
   getAllWallet(){
     return this.http.get<any>(environment.backendURL+'/admin/wallet')
   }

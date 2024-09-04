@@ -7,6 +7,9 @@
     <input matInput (keyup)="applyFilter($event)">
   </mat-form-field>
 
+  <button mat-flat-button (click)="createAccountModal()">Create Account
+    <mat-icon>control_point</mat-icon>
+  </button>
 </div>
 
 
@@ -37,7 +40,7 @@
 
     <ng-container matColumnDef="updatedAt">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Last update </th>
-      <td mat-cell *matCellDef="let row"> {{row.updatedAt|date:'dd/mm/YYYY'}} </td>
+      <td mat-cell *matCellDef="let row"> {{row.updatedAt|date:'dd/MM/YYYY'}} </td>
     </ng-container>
 
 
@@ -53,7 +56,9 @@
 
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> action </th>
-      <td mat-cell *matCellDef="let row">  </td>
+      <td mat-cell *matCellDef="let row">
+        <mat-icon (click)="payAccountModal(row.id)"  matTooltip="Pay">attach_money</mat-icon>
+      </td>
     </ng-container>
 
 
@@ -70,13 +75,33 @@
 </div>
 
 
-
-<ng-template #confirmDeleteing>
+<ng-template #createAccount>
   <mat-dialog-content>
-    <span>Are you sure want to delete this row ?</span>
+   <h2 mat-dialog-title>Select User To assign new Account</h2>
+    <mat-form-field>
+    <mat-label>User List</mat-label>
+      <mat-select [formControl]="userFc">
+        <mat-option *ngFor="let user of users" [value]="user.id">{{user.firstName+' '+user.lastName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-dialog-actions>
+    <button mat-button (click)="CreateAccount()">Save</button>
+    </mat-dialog-actions>
   </mat-dialog-content>
-  <div class="d-flex my-3 flex-row justify-content-around">
-    <button [mat-dialog-close]="false" mat-flat-button class="mr-3">NO</button>
-    <button [mat-dialog-close]="true" mat-flat-button >YES</button>
-  </div>
 </ng-template>
+
+
+<ng-template #paymentModal>
+  <mat-dialog-content>
+   <h2 mat-dialog-title>Payment</h2>
+    <mat-form-field>
+    <mat-label>Amount</mat-label>
+      <input matInput  [formControl]="payFc">
+    </mat-form-field>
+    <mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="true">Save</button>
+    </mat-dialog-actions>
+  </mat-dialog-content>
+</ng-template>
+
+
