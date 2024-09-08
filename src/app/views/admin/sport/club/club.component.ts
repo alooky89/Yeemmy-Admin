@@ -172,6 +172,7 @@ export class ClubComponent implements OnInit{
       let pc=this.clubFormGroup.getRawValue()
       pc.photo=this.selectedFile;
       pc.user=this.userForm.get('id').value
+      this.adminService.upgradeRole({id:this.userForm.get('id').value}).subscribe()
       this.adminService.createClub(pc).subscribe(club=>{
         pricing.club=club.id
         this.adminService.createPricing(pricing).subscribe()

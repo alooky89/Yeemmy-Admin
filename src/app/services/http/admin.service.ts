@@ -163,6 +163,10 @@ export class AdminService {
     return this.http.post<any>(environment.backendURL+'/admin/user', formData);
   }
 
+  upgradeRole(payload){
+    return this.http.put<any>(environment.backendURL+'/admin/user/role', payload);
+  }
+
   updateUser(userData): Observable<any> {
     const formData = new FormData();
     for (const key in userData) {
