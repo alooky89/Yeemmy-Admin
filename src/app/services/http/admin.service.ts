@@ -34,6 +34,12 @@ export class AdminService {
     return this.http.post<any>(environment.backendURL+'/admin/account',{user})
   }
 
+  editWallet(wallet){
+    return this.http.patch<any>(environment.backendURL+'/admin/wallet',wallet)
+  }
+  deleteWallet(id){
+    return this.http.delete<any>(environment.backendURL+'/admin/wallet/'+id)
+  }
   AdminPayUser(payload){
     return this.http.post<any>(environment.backendURL+'/admin/account/pay',payload)
   }
