@@ -33,6 +33,9 @@ export class AdminService {
   createAccount(user){
     return this.http.post<any>(environment.backendURL+'/admin/account',{user})
   }
+  createFees(payload){
+    return this.http.post<any>(environment.backendURL+'/admin/fees',payload)
+  }
 
   editWallet(wallet){
     return this.http.patch<any>(environment.backendURL+'/admin/wallet',wallet)

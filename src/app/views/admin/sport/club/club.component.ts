@@ -23,6 +23,7 @@ export class ClubComponent implements OnInit{
   pricingFormGroup:FormGroup;
   courtForm:FormGroup;
   userForm:FormGroup;
+  feesForm:FormGroup;
   capacity;
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
@@ -85,7 +86,38 @@ export class ClubComponent implements OnInit{
       gender:['', Validators.required],
     })
 
-
+    this.feesForm= this._formbuilder.group({
+        fees: this._formbuilder.array([
+      this._formbuilder.group({
+        name:['', Validators.required],
+        type:[{ value: 'ZAIN', disabled: true }],
+        commission:['', Validators.required],
+        user:[''],
+        providerfees:[{ value: 3, disabled: true }],
+      }),
+      this._formbuilder.group({
+        name:['', Validators.required],
+        type:[{ value: 'CARD', disabled: true }],
+        commission:['', Validators.required],
+        user:[''],
+        providerfees:[{ value: 3, disabled: true }],
+      }),
+      this._formbuilder.group({
+        name:['', Validators.required],
+        type:[{ value: 'ASCIA', disabled: true }],
+        commission:['', Validators.required],
+        user:[''],
+        providerfees:[{ value: 3, disabled: true }],
+      }),
+      this._formbuilder.group({
+        name:['', Validators.required],
+        type:[{ value: 'CASH', disabled: true }],
+        commission:['', Validators.required],
+        user:[''],
+        providerfees:[{ value: 0, disabled: true }],
+      })
+    ])
+      });
   }
 
   applyFilter(event: Event) {
@@ -150,6 +182,10 @@ export class ClubComponent implements OnInit{
     return  this.courtForm.get('courts') as FormArray
   }
 
+ get FeesFC(){
+    return  this.feesForm.get('fees') as FormArray
+  }
+
   addNewCourt(){
     this.CourtsFC.push(this._formbuilder.group({
       name:['', Validators.required],
@@ -173,6 +209,16 @@ export class ClubComponent implements OnInit{
       pc.photo=this.selectedFile;
       pc.user=this.userForm.get('id').value
       this.adminService.upgradeRole({id:this.userForm.get('id').value}).subscribe()
+      this.feesForm.get('fees').value
+
+
+      for (let i = 0; i < this.FeesFC.controls.length; i++) {
+        let fee=this.FeesFC.at(i).getRawValue()
+        fee.user=this.userForm.get('id').value
+        this.adminService.createFees(fee).subscribe()
+      }
+
+
       this.adminService.createClub(pc).subscribe(club=>{
         pricing.club=club.id
         this.adminService.createPricing(pricing).subscribe()
@@ -192,6 +238,13 @@ export class ClubComponent implements OnInit{
         let pc=this.clubFormGroup.getRawValue()
         pc.photo=this.selectedFile;
         pc.user=newUser.id
+
+        for (let i = 0; i < this.FeesFC.controls.length; i++) {
+          let fee=this.FeesFC.at(i).getRawValue()
+          fee.user=newUser.id
+          this.adminService.createFees(fee).subscribe()
+        }
+
 
         this.adminService.createClub(pc).subscribe(club=>{
 

@@ -159,6 +159,36 @@
         </div>
       </form>
     </mat-step>
+
+   <mat-step [stepControl]="feesForm">
+     <ng-template matStepLabel>Fees & commission</ng-template>
+     <ng-container [formGroup]="feesForm">
+     <ng-container formArrayName="fees" *ngFor="let cf of FeesFC.controls; let i = index">
+       <div class="card mt-4">
+         <div class="card-body">
+       <form class="d-flex flex-column p-3" [formGroupName]="i">
+         <h5>{{ cf.get('type')?.value }}</h5>
+
+         <mat-form-field appearance="fill">
+           <mat-label>Commission %</mat-label>
+           <input matInput formControlName="commission" placeholder="%">
+         </mat-form-field>
+
+              <mat-form-field appearance="fill">
+           <mat-label>Provider fees</mat-label>
+           <input matInput formControlName="providerfees">
+         </mat-form-field>
+
+       </form>
+         </div>
+       </div>
+     </ng-container>
+       <div class="d-flex justify-content-end">
+         <button mat-flat-button matStepperNext>Next</button>
+       </div>
+     </ng-container>
+   </mat-step>
+
     <mat-step [stepControl]="userForm" label="Create Owner">
       <mat-form-field appearance="fill">
         <mat-label>Set user</mat-label>
