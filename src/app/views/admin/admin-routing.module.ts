@@ -46,7 +46,7 @@ const routes: Routes = [
         component: WalletComponent
       },
       {
-        path: 'fees',
+        path: 'fees/:type',
         component: FeesComponent
       },
 

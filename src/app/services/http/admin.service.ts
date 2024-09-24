@@ -26,8 +26,9 @@ export class AdminService {
     return this.http.get<any>(environment.backendURL+'/admin/transactions')
   }
 
-  getFees(){
-    return this.http.get<any>(environment.backendURL+'/admin/fees')
+  getFees(type){
+    let params=new HttpParams().set('type',type)
+    return this.http.get<any>(environment.backendURL+'/admin/fees', {params})
   }
 
   createAccount(user){

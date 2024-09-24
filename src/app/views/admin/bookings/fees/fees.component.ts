@@ -1,10 +1,9 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {AdminService} from "../../../../services/http/admin.service";
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-fees',
@@ -12,16 +11,21 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrl: './fees.component.scss'
 })
 export class FeesComponent implements OnInit{
-  displayedColumns: string[] = [ 'type', 'commission', 'providerfees', 'action'];
+  displayedColumns: string[] = [ 'type', 'commission','user', 'providerfees', 'action'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   @ViewChild('addCourt') courtModal: TemplateRef<any>;
   feesForm:FormGroup;
-  constructor(private adminService: AdminService, private dialog: MatDialog,private _formBuilder:FormBuilder) {
+  constructor(private adminService: AdminService, private dialog: MatDialog,private _formBuilder:FormBuilder,private activatedRoute:ActivatedRoute) {
+    activatedRoute.params.subscribe(res=>console.log(res))
   }
 
   ngOnInit() {
-    this.adminService.getFees().subscribe(res=>{
-      this.dataSource = new MatTableDataSource(res);
+    this. activatedRoute.params.subscribe(param=>
+    {
+      this.adminService.getFees(param['type']).subscribe(res=>{
+        this.dataSource = new MatTableDataSource(res);
+      })
+
     })
     this.feesForm=this._formBuilder.group({
       id:[null],
