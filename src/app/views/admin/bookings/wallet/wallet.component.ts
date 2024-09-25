@@ -22,6 +22,7 @@ export class WalletComponent {
   userFc=new FormControl(null)
   payFc=new FormControl(null)
   users=[]
+  wallets=[]
   @ViewChild('createAccount') createAccount: TemplateRef<any>;
   @ViewChild('paymentModal') paymentModal: TemplateRef<any>;
   constructor(private adminService:AdminService,
@@ -31,6 +32,7 @@ export class WalletComponent {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.wallets=res
     })
     this.adminService.getAllUsers().subscribe(res=>this.users=res)
     this.walletForm=this._formBuilder.group({
@@ -53,6 +55,23 @@ export class WalletComponent {
     }
   }
 
+  filterName(event){
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue)
+      this.dataSource.data = this.wallets.filter(w => w.name?.toLowerCase()?.includes(filterValue))
+    else
+      this.dataSource.data = this.wallets
+    this.dataSource._updateChangeSubscription()
+  }
+
+  filterClub(event){
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue)
+      this.dataSource.data = this.wallets.filter(w => this.getClubNames(w.user.club)?.toLowerCase().includes(filterValue))
+    else
+      this.dataSource.data = this.wallets
+    this.dataSource._updateChangeSubscription()
+  }
 
   getClubNames(club:any[]){
     return club?.map(club=>club.name).join(', ')

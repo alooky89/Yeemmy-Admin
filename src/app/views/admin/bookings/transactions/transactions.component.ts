@@ -11,20 +11,22 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrl: './transactions.component.scss'
 })
 export class TransactionsComponent {
-  displayedColumns: string[] = ['id', 'amount', 'paidBy', 'paidTo', 'createdAt',  'type', 'status', 'action'];
+  displayedColumns: string[] = ['id', 'amount', 'paidBy', 'paidTo', 'createdAt', 'type', 'status', 'action'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  transactions = []
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('confirmDeleteing') confirmDeleteing: TemplateRef<any>;
-  constructor(private adminService:AdminService,
+
+  constructor(private adminService: AdminService,
               private dialog: MatDialog,) {
-    this.adminService.getAllTransactions().subscribe(res=> {
+    this.adminService.getAllTransactions().subscribe(res => {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.transactions = res
     })
   }
-
 
 
   applyFilter(event: Event) {
@@ -34,6 +36,29 @@ export class TransactionsComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  filterPaidBy(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue)
+      this.dataSource.data = this.transactions.filter(tr => tr.paidBy.username.toLowerCase().includes(filterValue))
+    else
+      this.dataSource.data = this.transactions
+    this.dataSource._updateChangeSubscription()
+  }
+
+  filterPaidTo(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue)
+      this.dataSource.data = this.transactions.filter(tr => tr.paidTo.username.toLowerCase().includes(filterValue))
+    else
+      this.dataSource.data = this.transactions
+    this.dataSource._updateChangeSubscription()
+  }
+
+  filterType(event) {
+    this.dataSource.data = this.dataSource.data.filter(tr => tr.type == event.value)
+    this.dataSource._updateChangeSubscription()
   }
 
 

@@ -3,9 +3,15 @@
 
 
   <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)">
+    <mat-label>Account name</mat-label>
+    <input matInput (keyup)="filterName($event)">
   </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Club</mat-label>
+    <input matInput (keyup)="filterClub($event)">
+  </mat-form-field>
+
 
   <button mat-flat-button (click)="createAccountModal()">Create Account
     <mat-icon>control_point</mat-icon>

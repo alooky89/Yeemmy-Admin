@@ -3,8 +3,23 @@
 
 
   <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)">
+    <mat-label>Paid By</mat-label>
+    <input matInput (keyup)="filterPaidBy($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Paid to</mat-label>
+    <input matInput (keyup)="filterPaidTo($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Type</mat-label>
+    <mat-select (selectionChange)="filterType($event)">
+      <mat-option value="ZAIN">ZAIN</mat-option>
+      <mat-option value="CARD">CARD</mat-option>
+      <mat-option value="ASCIA">ASCIA</mat-option>
+      <mat-option value="CASH">CASH</mat-option>
+    </mat-select>
   </mat-form-field>
 
 </div>
