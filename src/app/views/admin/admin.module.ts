@@ -29,6 +29,7 @@ import { TransactionsComponent } from './bookings/transactions/transactions.comp
 import { WalletComponent } from './bookings/wallet/wallet.component';
 import { FeesComponent } from './bookings/fees/fees.component';
 import {MatRadioGroup, MatRadioModule} from "@angular/material/radio";
+import { CoinPackComponent } from './bookings/coin-pack/coin-pack.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {MatRadioGroup, MatRadioModule} from "@angular/material/radio";
     CategoriesComponent,
     TransactionsComponent,
     WalletComponent,
-    FeesComponent
+    FeesComponent,
+    CoinPackComponent
   ],
     imports: [
         CommonModule,

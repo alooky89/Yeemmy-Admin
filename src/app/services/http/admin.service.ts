@@ -192,5 +192,22 @@ export class AdminService {
   }
 
 
+  deleteCoinPackage(id: number): Observable<any> {
+    return this.http.delete<any>(environment.backendURL+'/admin/coinpack/'+id);
+  }
+
+  updateCoinPackage(data): Observable<any> {
+    return this.http.patch<any>(environment.backendURL+'/admin/coinpack/'+data.id, data);
+  }
+
+  addCoinPackage(data): Observable<any> {
+    return this.http.post<any>(environment.backendURL+'/admin/coinpack', data);
+  }
+  getCoinPackage(): Observable<any> {
+    return this.http.get<any>(environment.backendURL+'/admin/coinpack/all');
+  }
+
+
+
 
 }

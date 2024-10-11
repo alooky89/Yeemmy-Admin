@@ -9,6 +9,7 @@ import {CategoriesComponent} from "./sport/categories/categories.component";
 import {TransactionsComponent} from "./bookings/transactions/transactions.component";
 import {WalletComponent} from "./bookings/wallet/wallet.component";
 import {FeesComponent} from "./bookings/fees/fees.component";
+import {CoinPackComponent} from "./bookings/coin-pack/coin-pack.component";
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: 'transactions',
         component: TransactionsComponent
+      },
+      {
+        path: 'coinpack',
+        component: CoinPackComponent
       },
 
       {
