@@ -11,7 +11,7 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrl: './transactions.component.scss'
 })
 export class TransactionsComponent {
-  displayedColumns: string[] = ['id', 'amount', 'paidBy', 'paidTo', 'createdAt', 'type', 'status', 'action'];
+  displayedColumns: string[] = ['id', 'amount', 'paidBy', 'paidTo', 'createdAt', 'type', 'status','event', 'action'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource([]);
   transactions = []
   @ViewChild(MatPaginator) paginator: MatPaginator;
